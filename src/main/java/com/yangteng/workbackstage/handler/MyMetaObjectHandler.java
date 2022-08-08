@@ -1,5 +1,6 @@
-package com.itheima.reggie.common;
+package com.yangteng.workbackstage.handler;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
  */
 @Component
 @Slf4j
-public class MyMetaObjecthandler implements MetaObjectHandler {
+public class MyMetaObjectHandler implements MetaObjectHandler {
     /**
      * 插入操作，自动填充
      * @param metaObject
@@ -23,8 +24,12 @@ public class MyMetaObjecthandler implements MetaObjectHandler {
 
         metaObject.setValue("createTime", LocalDateTime.now());
         metaObject.setValue("updateTime",LocalDateTime.now());
-        metaObject.setValue("createUser",BaseContext.getCurrentId());
-        metaObject.setValue("updateUser",BaseContext.getCurrentId());
+
+        // 如果是登录用户，自动填充创建人和更新人
+        if (StpUtil.isLogin()) {
+            metaObject.setValue("createUser", StpUtil.getLoginId());
+            metaObject.setValue("updateUser",StpUtil.getLoginId());
+        }
     }
 
     /**
@@ -40,6 +45,6 @@ public class MyMetaObjecthandler implements MetaObjectHandler {
         log.info("线程id为：{}",id);
 
         metaObject.setValue("updateTime",LocalDateTime.now());
-        metaObject.setValue("updateUser",BaseContext.getCurrentId());
+        metaObject.setValue("updateUser",StpUtil.getLoginId());
     }
 }

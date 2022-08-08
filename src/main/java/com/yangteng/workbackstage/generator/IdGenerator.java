@@ -1,4 +1,4 @@
-package com.yangteng.workbackstage.comm;
+package com.yangteng.workbackstage.generator;
 
 import java.util.Date;
 import java.util.UUID;
@@ -38,7 +38,7 @@ public class IdGenerator {
     private final static long MACHINE_LEFT = SEQUENCE_BIT;
     private final static long TIMESTMP_LEFT = MACHINE_BIT + SEQUENCE_BIT;
 
-    private long machineId;
+    private final long machineId;
     private long sequence = 0L;
     private long lastStmp = -1L;
 
