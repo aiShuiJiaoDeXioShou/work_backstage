@@ -12,11 +12,11 @@ import java.util.Collections;
 
 public class TableToEntityConstructor {
     // 新版本的代码生成器
-    public static void AutoTable(String... tables){
+    public static void AutoTable(String... tables) {
         FastAutoGenerator.create(
-                        "jdbc:mysql://localhost:3306/work?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false",
-                        "root",
-                        "yt2002")
+                "jdbc:mysql://localhost:3306/work?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false",
+                "root",
+                "yt2002")
                 .globalConfig(builder -> {
                     builder.author("林河") // 设置作者
                             .enableSwagger() // 开启 swagger 模式
@@ -28,7 +28,8 @@ public class TableToEntityConstructor {
                 .packageConfig(builder -> {
                     builder.parent("com.yangteng") // 设置父包名
                             .moduleName("workbackstage") // 设置父包模块名
-                            .pathInfo(Collections.singletonMap(OutputFile.xml, "D:\\Code\\graduation_project\\work_backstage\\work_backstage\\src\\main\\resources\\mapper")); // 设置mapperXml生成路径
+                            .pathInfo(Collections.singletonMap(OutputFile.xml,
+                                    "D:\\Code\\graduation_project\\work_backstage\\work_backstage\\src\\main\\resources\\mapper")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
                     builder.addInclude(tables) // 设置需要生成的表名
@@ -40,14 +41,14 @@ public class TableToEntityConstructor {
                             .enableLombok()
                             .enableChainModel()
                             .enableTableFieldAnnotation()
-                            .logicDeletePropertyName("deleteFlag")
+                            .logicDeletePropertyName("deleted")
                             .idType(IdType.ASSIGN_ID)
                             .enableFileOverride()
                             .addTableFills(
                                     new Property("updateTime", FieldFill.INSERT_UPDATE),
-                                    new Property("createTime",FieldFill.INSERT),
-                                    new Property("createUser",FieldFill.INSERT),
-                                    new Property("updateUser",FieldFill.INSERT_UPDATE)
+                                    new Property("createTime", FieldFill.INSERT),
+                                    new Property("createUser", FieldFill.INSERT),
+                                    new Property("updateUser", FieldFill.INSERT_UPDATE)
 
                             )
                             .build();
@@ -60,6 +61,6 @@ public class TableToEntityConstructor {
     }
 
     public static void main(String[] args) {
-        TableToEntityConstructor.AutoTable("work_user");
+        TableToEntityConstructor.AutoTable("work_book");
     }
 }
