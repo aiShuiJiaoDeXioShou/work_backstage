@@ -28,13 +28,13 @@ import lombok.experimental.Accessors;
 @Setter
 @ToString
 @Accessors(chain = true)
-@TableName("work_book")
-@ApiModel(value = "WorkBook对象", description = "")
-public class WorkBook implements Serializable {
+@TableName("user_consume")
+@ApiModel(value = "UserConsume对象", description = "")
+public class UserConsume implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("书籍id")
+    @ApiModelProperty("用户id")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Integer id;
 
@@ -51,35 +51,23 @@ public class WorkBook implements Serializable {
     @TableLogic
     private Integer deleted;
 
-    @ApiModelProperty("书籍名称")
-    @TableField("name")
-    private String name;
+    @ApiModelProperty("收藏的用户id")
+    @TableField("user_id")
+    private Integer userId;
 
-    @ApiModelProperty("作者id")
-    @TableField("autor_id")
-    private Integer autorId;
+    @ApiModelProperty("收藏的书籍信息id")
+    @TableField("book_id")
+    private Integer bookId;
 
-    @ApiModelProperty("书籍套餐id")
-    @TableField("price_combo_id")
-    private Integer priceComboId;
+    @ApiModelProperty("效费版本")
+    @TableField("version")
+    private Integer version;
 
-    @ApiModelProperty("指定书籍价格，有它在price_combo_id不起效")
-    @TableField("book_price")
-    private BigDecimal bookPrice;
+    @ApiModelProperty("消费金额")
+    @TableField("money")
+    private BigDecimal money;
 
-    @ApiModelProperty("书籍的封面")
-    @TableField("book_image_url")
-    private String bookImageUrl;
-
-    @ApiModelProperty("书籍的简介")
-    @TableField("book_introduce")
-    private String bookIntroduce;
-
-    @ApiModelProperty("书籍类别")
-    @TableField("book_category")
-    private String bookCategory;
-
-    @ApiModelProperty("被点击量")
-    @TableField("clicks")
-    private Integer clicks;
+    @ApiModelProperty("消费类型")
+    @TableField("type")
+    private Integer type;
 }

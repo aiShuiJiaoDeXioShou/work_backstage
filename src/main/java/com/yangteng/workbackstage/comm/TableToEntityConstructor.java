@@ -61,6 +61,9 @@ public class TableToEntityConstructor {
     }
 
     public static void main(String[] args) {
-        TableToEntityConstructor.AutoTable("work_book");
+        // TableToEntityConstructor.AutoTable("book_collect",
+        // "monthly_ticket","user_consume");
+        // TableToEntityConstructor.AutoTable("work_book");
+        TableToEntityConstructor.AutoTable("work_user");
     }
 }

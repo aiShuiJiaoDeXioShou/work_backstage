@@ -3,6 +3,8 @@ package com.yangteng.workbackstage.handler;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
+
+import org.apache.ibatis.reflection.ReflectionException;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 public class MyMetaObjectHandler implements MetaObjectHandler {
     /**
      * 插入操作，自动填充
+     * 
      * @param metaObject
      */
     @Override
@@ -23,17 +26,23 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         log.info(metaObject.toString());
 
         metaObject.setValue("createTime", LocalDateTime.now());
-        metaObject.setValue("updateTime",LocalDateTime.now());
+        metaObject.setValue("updateTime", LocalDateTime.now());
 
         // 如果是登录用户，自动填充创建人和更新人
         if (StpUtil.isLogin()) {
-            metaObject.setValue("createUser", StpUtil.getLoginId());
-            metaObject.setValue("updateUser",StpUtil.getLoginId());
+            try {
+                metaObject.setValue("createUser", StpUtil.getLoginId());
+                metaObject.setValue("updateUser", StpUtil.getLoginId());
+            } catch (ReflectionException e) {
+                log.warn("没有createUser字段,或者没有updateUser字段,无法填充!!!");
+            }
+
         }
     }
 
     /**
      * 更新操作，自动填充
+     * 
      * @param metaObject
      */
     @Override
@@ -42,9 +51,17 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         log.info(metaObject.toString());
 
         long id = Thread.currentThread().getId();
-        log.info("线程id为：{}",id);
+        log.info("线程id为：{}", id);
 
-        metaObject.setValue("updateTime",LocalDateTime.now());
-        metaObject.setValue("updateUser",StpUtil.getLoginId());
+        metaObject.setValue("updateTime", LocalDateTime.now());
+        // 如果是登录用户，自动填充创建人和更新人
+        if (StpUtil.isLogin()) {
+            try {
+                metaObject.setValue("updateUser", StpUtil.getLoginId());
+            } catch (ReflectionException e) {
+                log.warn("没有createUser字段,或者没有updateUser字段,无法填充!!!");
+            }
+        }
+
     }
 }

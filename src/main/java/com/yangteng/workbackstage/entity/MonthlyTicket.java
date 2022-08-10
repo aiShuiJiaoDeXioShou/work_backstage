@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -28,13 +27,13 @@ import lombok.experimental.Accessors;
 @Setter
 @ToString
 @Accessors(chain = true)
-@TableName("work_book")
-@ApiModel(value = "WorkBook对象", description = "")
-public class WorkBook implements Serializable {
+@TableName("monthly_ticket")
+@ApiModel(value = "MonthlyTicket对象", description = "")
+public class MonthlyTicket implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("书籍id")
+    @ApiModelProperty("用户id")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Integer id;
 
@@ -51,35 +50,11 @@ public class WorkBook implements Serializable {
     @TableLogic
     private Integer deleted;
 
-    @ApiModelProperty("书籍名称")
-    @TableField("name")
-    private String name;
+    @ApiModelProperty("投入月票的用户id")
+    @TableField("user_id")
+    private Integer userId;
 
-    @ApiModelProperty("作者id")
-    @TableField("autor_id")
-    private Integer autorId;
-
-    @ApiModelProperty("书籍套餐id")
-    @TableField("price_combo_id")
-    private Integer priceComboId;
-
-    @ApiModelProperty("指定书籍价格，有它在price_combo_id不起效")
-    @TableField("book_price")
-    private BigDecimal bookPrice;
-
-    @ApiModelProperty("书籍的封面")
-    @TableField("book_image_url")
-    private String bookImageUrl;
-
-    @ApiModelProperty("书籍的简介")
-    @TableField("book_introduce")
-    private String bookIntroduce;
-
-    @ApiModelProperty("书籍类别")
-    @TableField("book_category")
-    private String bookCategory;
-
-    @ApiModelProperty("被点击量")
-    @TableField("clicks")
-    private Integer clicks;
+    @ApiModelProperty("被投入月票的书籍信息id")
+    @TableField("book_id")
+    private Integer bookId;
 }
