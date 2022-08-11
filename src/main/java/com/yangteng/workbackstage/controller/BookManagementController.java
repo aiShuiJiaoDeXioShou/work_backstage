@@ -1,23 +1,6 @@
 package com.yangteng.workbackstage.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.yangteng.workbackstage.mapper.BookCollectMapper;
-import com.yangteng.workbackstage.myenum.E;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -25,16 +8,29 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yangteng.workbackstage.comm.R;
 import com.yangteng.workbackstage.entity.BookCollect;
 import com.yangteng.workbackstage.entity.WorkBook;
+import com.yangteng.workbackstage.mapper.BookCollectMapper;
+import com.yangteng.workbackstage.myenum.E;
 import com.yangteng.workbackstage.service.IBookCollectService;
 import com.yangteng.workbackstage.service.IWorkBookService;
-
-import cn.dev33.satoken.stp.StpUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+
+/**
+ * 此类包含所有书籍相关的方法
+ * 还包过图书的排序
+ * 图书的收藏关注以及相应的推荐与搜索算法
+ *
+ * @author 林河
+ * @date 2022/8/12
+ */
 @RestController
 @Slf4j
 @RequestMapping("/book")
-public class BookController {
+public class BookManagementController {
 
     @Autowired
     private IWorkBookService bookService;
@@ -50,7 +46,7 @@ public class BookController {
 
     /**
      * 分页查询书籍
-     * 
+     *
      * @param page  分页参数
      * @param limit 每页显示的条数
      * @return R<Page> 返回查询结果
@@ -64,7 +60,7 @@ public class BookController {
 
     /**
      * 添加一本图书
-     * 
+     *
      * @param book
      */
     @PostMapping
@@ -79,7 +75,7 @@ public class BookController {
 
     /**
      * 删除一本图书
-     * 
+     *
      * @param id
      */
     @DeleteMapping("/{id}")
@@ -90,7 +86,7 @@ public class BookController {
 
     /**
      * 更新一本图书
-     * 
+     *
      * @param book
      */
     @PutMapping
@@ -101,7 +97,7 @@ public class BookController {
 
     /**
      * 分类查询
-     * 
+     *
      * @param type
      * @return R<List<WorkBook>> 返回查询信息
      */
@@ -113,7 +109,7 @@ public class BookController {
 
     /**
      * 按照点击量查询图书
-     * 
+     *
      * @param page
      * @param limit
      * @return R<Page<WorkBook>> 返回查询信息
@@ -130,7 +126,7 @@ public class BookController {
 
     /**
      * 更新点击量
-     * 
+     *
      * @param id
      */
     @PutMapping("/click/{id}")
@@ -143,7 +139,7 @@ public class BookController {
 
     /**
      * 按照收藏量和分类条件查询图书
-     * 
+     *
      * @return R 返回查询信息
      */
     @GetMapping("/collect/{page}/{limit}")
@@ -163,7 +159,7 @@ public class BookController {
 
     /**
      * 按照分类条件和月票查询图书
-     * 
+     *
      * @param type
      * @param page
      * @param limit
@@ -171,14 +167,14 @@ public class BookController {
      */
     @GetMapping("/ticket/{type}/{page}/{limit}")
     public R<Page<WorkBook>> toTicket(@PathVariable Integer type, @PathVariable Integer page,
-            @PathVariable(value = "10") Integer limit) {
+                                      @PathVariable(value = "10") Integer limit) {
 
         return null;
     }
 
     /**
      * 新增一个收藏
-     * 
+     *
      * @param bookId 书籍id
      */
     @PostMapping("/collect/{bookId}")
@@ -194,7 +190,7 @@ public class BookController {
 
     /**
      * 取消收藏
-     * 
+     *
      * @param bookId 书籍id
      */
     @DeleteMapping("/collect/{bookId}")

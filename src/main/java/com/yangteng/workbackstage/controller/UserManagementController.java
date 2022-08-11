@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/user")
 @ToString
-public class UserController {
+public class UserManagementController {
 
     @Autowired
     private IWorkUserService userService;
+
     // 注册账号
     @PostMapping("/register")
     public R<String> register(@RequestBody WorkUser workUser) {

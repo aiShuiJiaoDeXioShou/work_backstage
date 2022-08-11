@@ -1,14 +1,6 @@
 package com.yangteng.workbackstage.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -16,13 +8,17 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author 林河
- * @since 2022-08-09
+ * @since 2022-08-11
  */
 @Getter
 @Setter
@@ -82,4 +78,8 @@ public class WorkBook implements Serializable {
     @ApiModelProperty("被点击量")
     @TableField("clicks")
     private Integer clicks;
+
+    @ApiModelProperty("书籍状态0表示未通过审查,1表示已通过审查,2表示已签约,3表示已上架,-1表示已封杀")
+    @TableField("state")
+    private Integer state;
 }
