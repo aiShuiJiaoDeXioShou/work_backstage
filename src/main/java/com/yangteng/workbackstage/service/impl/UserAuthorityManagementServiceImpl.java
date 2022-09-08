@@ -34,7 +34,7 @@ public class UserAuthorityManagementServiceImpl implements UserAuthorityManageme
      */
     public List<Authority> getAuthorityList(List<Role> roles) {
         // 拿到用户所有角色的id
-        final List<Integer> roleIds = roles.stream().map(Role::getId).collect(Collectors.toList());
+        final List<Long> roleIds = roles.stream().map(Role::getId).collect(Collectors.toList());
 
         // 用角色id到关联表去取关联类
         final List<RoleForAuthority> roleForAuthoritys = roleForAuthorityService.list(

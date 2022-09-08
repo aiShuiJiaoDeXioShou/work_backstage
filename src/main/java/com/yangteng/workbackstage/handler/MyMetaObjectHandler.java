@@ -22,9 +22,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        log.info("公共字段自动填充[insert]...");
-        log.info(metaObject.toString());
-
         metaObject.setValue("createTime", LocalDateTime.now());
         metaObject.setValue("updateTime", LocalDateTime.now());
 
@@ -33,11 +30,17 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
             try {
                 metaObject.setValue("createUser", StpUtil.getLoginId());
                 metaObject.setValue("updateUser", StpUtil.getLoginId());
+
+                Object autorId = metaObject.getValue("autorId");
+                if (autorId != null) {
+                    metaObject.setValue("autorId", StpUtil.getLoginId());
+                }
+
             } catch (ReflectionException e) {
                 log.warn("没有createUser字段,或者没有updateUser字段,无法填充!!!");
             }
-
         }
+
     }
 
     /**
@@ -47,13 +50,9 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void updateFill(MetaObject metaObject) {
-        log.info("公共字段自动填充[update]...");
-        log.info(metaObject.toString());
-
-        long id = Thread.currentThread().getId();
-        log.info("线程id为：{}", id);
 
         metaObject.setValue("updateTime", LocalDateTime.now());
+
         // 如果是登录用户，自动填充创建人和更新人
         if (StpUtil.isLogin()) {
             try {

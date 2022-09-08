@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        String[] allowDomain = {"http://localhost:8082/","http://172.24.74.207:8082/","http://localhost/"};
+        String[] allowDomain = {"http://localhost:8081/","http://172.24.74.207:8081/","http://localhost/"};
         registry.addMapping("/**")//设置允许跨域的路径
                 .allowedOrigins(allowDomain)//多url跨域
                 .allowCredentials(true)//是否允许证书 不写默认开启

@@ -1,7 +1,7 @@
 package com.yangteng.workbackstage.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yangteng.workbackstage.entity.BookChapter;
+import com.yangteng.workbackstage.entity.book.BookChapter;
 import com.yangteng.workbackstage.mapper.BookChapterMapper;
 import com.yangteng.workbackstage.service.IBookChapterService;
 import org.springframework.stereotype.Service;

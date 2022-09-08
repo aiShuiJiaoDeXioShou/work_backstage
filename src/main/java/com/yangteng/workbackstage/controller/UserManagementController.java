@@ -2,9 +2,8 @@ package com.yangteng.workbackstage.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
-import com.yangteng.workbackstage.annotation.AuthorHimself;
 import com.yangteng.workbackstage.comm.R;
-import com.yangteng.workbackstage.entity.WorkUser;
+import com.yangteng.workbackstage.entity.us.WorkUser;
 import com.yangteng.workbackstage.service.IWorkUserService;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;

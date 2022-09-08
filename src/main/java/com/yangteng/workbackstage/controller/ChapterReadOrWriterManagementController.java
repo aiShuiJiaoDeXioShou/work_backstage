@@ -4,9 +4,10 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yangteng.workbackstage.annotation.AuthorHimself;
 import com.yangteng.workbackstage.comm.R;
-import com.yangteng.workbackstage.entity.BookChapter;
-import com.yangteng.workbackstage.entity.ChapterComment;
+import com.yangteng.workbackstage.entity.book.BookChapter;
+import com.yangteng.workbackstage.entity.book.ChapterComment;
 import com.yangteng.workbackstage.service.IBookChapterService;
 import com.yangteng.workbackstage.service.IChapterCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +95,7 @@ public class ChapterReadOrWriterManagementController {
      * @return R.ok or R.fail
      */
     @PutMapping
-    @SaCheckLogin
+    @AuthorHimself // 只有作者本人和管理员才能更改
     public R updateChapter(@RequestBody BookChapter chapter) {
         final boolean update = bookChapterService.updateById(chapter);
         return update ? R.ok() : R.fail();
@@ -106,7 +107,7 @@ public class ChapterReadOrWriterManagementController {
      * @param chapterId
      */
     @DeleteMapping("/{chapterId}")
-    @SaCheckLogin
+    @AuthorHimself
     public R deleteChapter(@PathVariable Integer chapterId) {
         final boolean delete = bookChapterService.remove(
                 Wrappers.lambdaQuery(new BookChapter())
@@ -169,11 +170,22 @@ public class ChapterReadOrWriterManagementController {
      * @param chapter
      * @return R.ok or R.fail
      */
-    @SaCheckLogin
+    @AuthorHimself
     @PostMapping
     public R addOneChapter(BookChapter chapter) {
         boolean save = bookChapterService.save(chapter);
         return save ? R.ok() : R.fail();
     }
+
+    /**
+     * 扫描一本txt文档或者word文档，转化为书籍
+     */
+    @SaCheckLogin
+    public R uploadBook(BookChapter chapter) {
+
+        return R.ok();
+    }
+
+
 
 }

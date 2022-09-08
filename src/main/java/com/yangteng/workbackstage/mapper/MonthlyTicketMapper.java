@@ -1,6 +1,6 @@
 package com.yangteng.workbackstage.mapper;
 
-import com.yangteng.workbackstage.entity.MonthlyTicket;
+import com.yangteng.workbackstage.entity.prop.MonthlyTicket;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

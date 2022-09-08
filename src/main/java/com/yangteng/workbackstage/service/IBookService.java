@@ -1,6 +1,6 @@
 package com.yangteng.workbackstage.service;
 
-import com.yangteng.workbackstage.entity.WorkBook;
+import com.yangteng.workbackstage.entity.book.Book;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author 林河
  * @since 2022-08-09
  */
-public interface IWorkBookService extends IService<WorkBook> {
+public interface IBookService extends IService<Book> {
 
 }

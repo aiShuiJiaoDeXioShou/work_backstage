@@ -42,7 +42,7 @@ public class TableToEntityConstructor {
                                 })
                                 .strategyConfig(builder -> {
                                         builder.addInclude(tables) // 设置需要生成的表名
-                                                        .addTablePrefix("t_", "c_", "ua_")// 设置过滤表前缀
+                                                        .addTablePrefix("t_", "c_", "ua_","us_")// 设置过滤表前缀
                                                         .build()
                                                         .entityBuilder()
                                                         .enableChainModel()
@@ -75,23 +75,48 @@ public class TableToEntityConstructor {
                 // "monthly_ticket","user_consume");
                 // TableToEntityConstructor.AutoTable("work_book");
                 // 根据数据库里面的权限认证生成代码
-                /*
-                 * TableToEntityConstructor.AutoTable(
-                 * "entity.ua",
-                 * "mapper",
-                 * "service",
-                 * "ua_role",
-                 * "ua_user_for_role",
-                 * "ua_authority",
-                 * "ua_role_for_authority"
-                 * );
-                 */
+                /* TableToEntityConstructor.AutoTable(
+                 "entity.ua",
+                 "mapper",
+                 "service",
+                 "ua_role",
+                 "ua_user_for_role",
+                 "ua_authority",
+                 "ua_role_for_authority"
+                 );*/
 
-                // Book 章节管理
+                /*// Book 章节管理
                 TableToEntityConstructor.AutoTable(
                                 "entity",
                                 "mapper",
                                 "service",
-                                "book_chapter", "chapter_comment");
+
+                        "book_chapter",
+                        "chapter_comment",
+                        "book_collect",
+                        "chapter_comment",
+                        "monthly_ticket",
+                        "user_consume",
+                        "work_book",
+                        "work_user"
+                );*/
+
+        /*    TableToEntityConstructor.AutoTable(
+                    "entity.us",
+                    "mapper",
+                    "service",
+                    "us_recharge",
+                    "us_consume",
+                    "us_coupon",
+                    "us_coupon_user_bag"
+            );*/
+
+            TableToEntityConstructor.AutoTable(
+                    "entity.book",
+                    "mapper",
+                    "service",
+                    "book"
+
+            );
         }
 }

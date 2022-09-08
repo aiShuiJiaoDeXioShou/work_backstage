@@ -31,3 +31,7 @@ spring:
 
 upload:
   file: D:/Code/upload/
+
+python:
+  script:
+    path: D:/Code/pythonScript/

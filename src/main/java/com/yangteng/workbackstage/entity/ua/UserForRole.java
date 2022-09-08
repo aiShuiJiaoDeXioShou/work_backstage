@@ -1,6 +1,12 @@
 package com.yangteng.workbackstage.entity.ua;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -8,16 +14,13 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 /**
  * <p>
- *
+ * 
  * </p>
  *
  * @author 林河
- * @since 2022-08-11
+ * @since 2022-09-08
  */
 @Getter
 @Setter
@@ -31,7 +34,7 @@ public class UserForRole implements Serializable {
 
     @ApiModelProperty("用户for role")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty("创造时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
@@ -43,11 +46,11 @@ public class UserForRole implements Serializable {
 
     @ApiModelProperty("用户id")
     @TableField("user_id")
-    private Integer userId;
+    private Long userId;
 
     @ApiModelProperty("角色id")
     @TableField("role_id")
-    private Integer roleId;
+    private Long roleId;
 
     @ApiModelProperty("过期时间，如果为空就说明没有过期时间，为永久")
     @TableField("expiration")

@@ -1,4 +1,4 @@
-package com.yangteng.workbackstage.authority;
+package com.yangteng.workbackstage.handler;
 
 import cn.dev33.satoken.stp.StpInterface;
 import com.yangteng.workbackstage.entity.ua.Authority;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Component
 @Slf4j
-public class UserPermissionCertificationImpl implements StpInterface {
+public class UserPermissionCertificationHandler implements StpInterface {
     @Autowired
     private UserAuthorityManagementService userAuthorityManagementService;
 

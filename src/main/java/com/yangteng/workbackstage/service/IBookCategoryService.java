@@ -1,6 +1,6 @@
 package com.yangteng.workbackstage.service;
 
-import com.yangteng.workbackstage.entity.UserConsume;
+import com.yangteng.workbackstage.entity.book.BookCategory;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author 林河
- * @since 2022-08-09
+ * @since 2022-09-08
  */
-public interface IUserConsumeService extends IService<UserConsume> {
+public interface IBookCategoryService extends IService<BookCategory> {
 
 }

@@ -1,5 +1,7 @@
 package com.yangteng.workbackstage.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.yangteng.workbackstage.comm.R;
 import com.yangteng.workbackstage.entity.ua.Authority;
@@ -7,9 +9,6 @@ import com.yangteng.workbackstage.entity.ua.Role;
 import com.yangteng.workbackstage.entity.ua.RoleForAuthority;
 import com.yangteng.workbackstage.entity.ua.UserForRole;
 import com.yangteng.workbackstage.service.*;
-
-import cn.dev33.satoken.annotation.SaCheckLogin;
-import cn.dev33.satoken.annotation.SaCheckRole;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -69,7 +68,7 @@ public class UserAuthorityManagementController {
      * @return R
      */
     @PostMapping("/user_for_role/{userId}/{roleId}")
-    public R addUserForRole(@PathVariable Integer userId, @PathVariable Integer roleId) {
+    public R addUserForRole(@PathVariable Long userId, @PathVariable Long roleId) {
         return userForRoleService.save(new UserForRole().setRoleId(roleId).setUserId(userId)) ? R.ok() : R.fail();
     }
 
@@ -81,7 +80,7 @@ public class UserAuthorityManagementController {
      * @return R
      */
     @PostMapping("/role_for_authority")
-    public R addRoleForAuthority(Integer roleId, Integer authorityId) {
+    public R addRoleForAuthority(Long roleId, Long authorityId) {
         return roleForAuthorityService.save(new RoleForAuthority().setAuthorityId(authorityId).setRoleId(roleId))
                 ? R.ok()
                 : R.fail();
@@ -95,7 +94,8 @@ public class UserAuthorityManagementController {
      * @return R
      */
     @DeleteMapping("/user_for_role")
-    public R deleteUserForRole(Integer userId, Integer roleId) {
+    public R deleteUserForRole(Long userId, Long roleId) {
+
         return userForRoleService.remove(
                 Wrappers.lambdaQuery(new UserForRole())
                         .eq(UserForRole::getUserId, userId)
@@ -110,7 +110,7 @@ public class UserAuthorityManagementController {
      * @return R
      */
     @DeleteMapping("/role_for_authority/{roleId}/{authorityId}")
-    public R deleteRoleForAuthority(@PathVariable Integer roleId, @PathVariable Integer authorityId) {
+    public R deleteRoleForAuthority(@PathVariable Long roleId, @PathVariable Long authorityId) {
         return roleForAuthorityService.remove(
                 Wrappers.lambdaQuery(new RoleForAuthority())
                         .eq(RoleForAuthority::getRoleId, roleId)
@@ -124,7 +124,7 @@ public class UserAuthorityManagementController {
      * @return R
      */
     @DeleteMapping("/role/{roleId}")
-    public R deleteRole(@PathVariable Integer roleId) {
+    public R deleteRole(@PathVariable Long roleId) {
         return roleService.removeById(roleId) ? R.ok() : R.fail();
     }
 
@@ -135,7 +135,7 @@ public class UserAuthorityManagementController {
      * @return R
      */
     @DeleteMapping("/authority/{authorityId}")
-    public R deleteAuthority(@PathVariable Integer authorityId) {
+    public R deleteAuthority(@PathVariable Long authorityId) {
         return authorityService.removeById(authorityId) ? R.ok() : R.fail();
     }
 
@@ -189,7 +189,7 @@ public class UserAuthorityManagementController {
      * @return R
      */
     @GetMapping("/is_role_exp/{userId}/{roleId}")
-    public R isUserForRoleExpired(@PathVariable Integer userId, @PathVariable Integer roleId) {
+    public R isUserForRoleExpired(@PathVariable Long userId, @PathVariable Long roleId) {
         final UserForRole userForRole = userForRoleService.getOne(
                 Wrappers.lambdaQuery(new UserForRole())
                         .eq(UserForRole::getUserId, userId)
@@ -205,7 +205,7 @@ public class UserAuthorityManagementController {
      * @return R
      */
     @GetMapping("/find_all_role/{id}")
-    public R findAllRole(@PathVariable Integer id) {
+    public R findAllRole(@PathVariable Long id) {
         return R.ok(userAuthorityManagementService.getRoleList(id));
     }
 
@@ -215,7 +215,7 @@ public class UserAuthorityManagementController {
      * @return R
      */
     @GetMapping("/find_all_authority/{id}")
-    public R findAllAuthority(@PathVariable Integer id) {
+    public R findAllAuthority(@PathVariable Long id) {
         return R.ok(userAuthorityManagementService.getAuthorityList(userAuthorityManagementService.getRoleList(id)));
     }
 }

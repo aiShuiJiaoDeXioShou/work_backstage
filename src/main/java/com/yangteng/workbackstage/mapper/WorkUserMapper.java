@@ -1,6 +1,6 @@
 package com.yangteng.workbackstage.mapper;
 
-import com.yangteng.workbackstage.entity.WorkUser;
+import com.yangteng.workbackstage.entity.us.WorkUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

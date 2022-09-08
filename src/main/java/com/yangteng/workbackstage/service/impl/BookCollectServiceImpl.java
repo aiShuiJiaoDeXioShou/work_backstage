@@ -1,6 +1,6 @@
 package com.yangteng.workbackstage.service.impl;
 
-import com.yangteng.workbackstage.entity.BookCollect;
+import com.yangteng.workbackstage.entity.book.BookCollect;
 import com.yangteng.workbackstage.mapper.BookCollectMapper;
 import com.yangteng.workbackstage.service.IBookCollectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

@@ -7,6 +7,4 @@ import lombok.Data;
 @AllArgsConstructor
 public class MethodFormatException extends RuntimeException{
     private String message;
-    private String MethodPath;
-    private String MethodName;
 }

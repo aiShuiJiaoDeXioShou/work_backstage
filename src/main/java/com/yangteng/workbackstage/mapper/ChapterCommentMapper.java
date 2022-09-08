@@ -1,7 +1,7 @@
 package com.yangteng.workbackstage.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.yangteng.workbackstage.entity.ChapterComment;
+import com.yangteng.workbackstage.entity.book.ChapterComment;
 
 /**
  * <p>

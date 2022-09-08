@@ -1,4 +1,4 @@
-package com.yangteng.workbackstage.entity;
+package com.yangteng.workbackstage.entity.us;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -21,21 +22,21 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 林河
- * @since 2022-08-09
+ * @since 2022-09-08
  */
 @Getter
 @Setter
 @ToString
 @Accessors(chain = true)
-@TableName("book_collect")
-@ApiModel(value = "BookCollect对象", description = "")
-public class BookCollect implements Serializable {
+@TableName("us_consume")
+@ApiModel(value = "Consume对象", description = "")
+public class Consume implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("用户id")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty("创造时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
@@ -45,16 +46,28 @@ public class BookCollect implements Serializable {
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
+    @ApiModelProperty("用户id")
+    @TableField("user_id")
+    private Long userId;
+
+    @ApiModelProperty("信息id")
+    @TableField("book_id")
+    private Long bookId;
+
+    @ApiModelProperty("效费版本")
+    @TableField("version")
+    private Integer version;
+
+    @ApiModelProperty("消费金额")
+    @TableField("money")
+    private BigDecimal money;
+
+    @ApiModelProperty("消费类型")
+    @TableField("type")
+    private Integer type;
+
     @ApiModelProperty("逻辑删除字段")
     @TableField("deleted")
     @TableLogic
     private Integer deleted;
-
-    @ApiModelProperty("收藏的用户id")
-    @TableField("user_id")
-    private Integer userId;
-
-    @ApiModelProperty("收藏的书籍信息id")
-    @TableField("book_id")
-    private Integer bookId;
 }

@@ -1,6 +1,6 @@
 package com.yangteng.workbackstage.service.impl;
 
-import com.yangteng.workbackstage.entity.MonthlyTicket;
+import com.yangteng.workbackstage.entity.prop.MonthlyTicket;
 import com.yangteng.workbackstage.mapper.MonthlyTicketMapper;
 import com.yangteng.workbackstage.service.IMonthlyTicketService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

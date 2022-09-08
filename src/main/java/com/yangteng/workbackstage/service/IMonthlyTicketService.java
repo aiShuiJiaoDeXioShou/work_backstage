@@ -1,6 +1,6 @@
 package com.yangteng.workbackstage.service;
 
-import com.yangteng.workbackstage.entity.MonthlyTicket;
+import com.yangteng.workbackstage.entity.prop.MonthlyTicket;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

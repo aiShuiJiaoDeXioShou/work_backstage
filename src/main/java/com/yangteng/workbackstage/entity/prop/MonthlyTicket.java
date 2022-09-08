@@ -1,4 +1,4 @@
-package com.yangteng.workbackstage.entity;
+package com.yangteng.workbackstage.entity.prop;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -22,21 +21,21 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 林河
- * @since 2022-08-09
+ * @since 2022-09-08
  */
 @Getter
 @Setter
 @ToString
 @Accessors(chain = true)
-@TableName("user_consume")
-@ApiModel(value = "UserConsume对象", description = "")
-public class UserConsume implements Serializable {
+@TableName("monthly_ticket")
+@ApiModel(value = "MonthlyTicket对象", description = "")
+public class MonthlyTicket implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("用户id")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty("创造时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
@@ -51,23 +50,11 @@ public class UserConsume implements Serializable {
     @TableLogic
     private Integer deleted;
 
-    @ApiModelProperty("收藏的用户id")
+    @ApiModelProperty("投入月票的用户id")
     @TableField("user_id")
-    private Integer userId;
+    private Long userId;
 
-    @ApiModelProperty("收藏的书籍信息id")
+    @ApiModelProperty("被投入月票的书籍信息id")
     @TableField("book_id")
-    private Integer bookId;
-
-    @ApiModelProperty("效费版本")
-    @TableField("version")
-    private Integer version;
-
-    @ApiModelProperty("消费金额")
-    @TableField("money")
-    private BigDecimal money;
-
-    @ApiModelProperty("消费类型")
-    @TableField("type")
-    private Integer type;
+    private Long bookId;
 }

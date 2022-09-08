@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yangteng.workbackstage.mapper.CouponUserBagMapper">
+    <select id="selectAllCouponByUserId" parameterType="long" resultType="com.yangteng.workbackstage.entity.vo.CouponBagVo">
+        SELECT
+            bag.coupon_id AS coupon_id,
+            COUNT( bag.coupon_id ) AS coupon_number,
+            coupon.create_time,
+            coupon.`name` AS title,
+            coupon.discount,
+            coupon.discounted_price,
+            coupon.expired_time
+        FROM
+            us_coupon_user_bag AS bag,
+            us_coupon AS coupon
+        WHERE
+            bag.create_user = #{userId}
+          AND bag.coupon_id = coupon.id
+        GROUP BY
+            bag.coupon_id;
+    </select>
+    <select id="selectAllNotExpiringByUserId" resultType="com.yangteng.workbackstage.entity.vo.CouponBagVo">
+        SELECT
+            bag.coupon_id AS coupon_id,
+            COUNT( bag.coupon_id ) AS coupon_number,
+            coupon.create_time,
+            coupon.`name` AS title,
+            coupon.discount,
+            coupon.discounted_price,
+            coupon.expired_time
+        FROM
+            us_coupon_user_bag AS bag,
+            us_coupon AS coupon
+        WHERE
+            bag.create_user = #{userId}
+          AND bag.coupon_id = coupon.id
+          AND coupon.expired_time >= coupon.create_time
+        GROUP BY
+            bag.coupon_id;
+    </select>
+</mapper>

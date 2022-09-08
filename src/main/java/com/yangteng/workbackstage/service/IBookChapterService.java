@@ -1,7 +1,7 @@
 package com.yangteng.workbackstage.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yangteng.workbackstage.entity.BookChapter;
+import com.yangteng.workbackstage.entity.book.BookChapter;
 
 /**
  * <p>

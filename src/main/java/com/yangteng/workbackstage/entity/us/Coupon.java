@@ -1,4 +1,4 @@
-package com.yangteng.workbackstage.entity;
+package com.yangteng.workbackstage.entity.us;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -21,21 +22,21 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 林河
- * @since 2022-08-09
+ * @since 2022-09-08
  */
 @Getter
 @Setter
 @ToString
 @Accessors(chain = true)
-@TableName("monthly_ticket")
-@ApiModel(value = "MonthlyTicket对象", description = "")
-public class MonthlyTicket implements Serializable {
+@TableName("us_coupon")
+@ApiModel(value = "Coupon对象", description = "")
+public class Coupon implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("用户id")
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Integer id;
+    @ApiModelProperty("账单记录")
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     @ApiModelProperty("创造时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
@@ -45,16 +46,32 @@ public class MonthlyTicket implements Serializable {
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
+    @ApiModelProperty("创建者的用户id")
+    @TableField(value = "create_user", fill = FieldFill.INSERT)
+    private Long createUser;
+
+    @ApiModelProperty("更新者的用户id")
+    @TableField(value = "update_user", fill = FieldFill.INSERT_UPDATE)
+    private Long updateUser;
+
+    @ApiModelProperty("优惠卷名称")
+    @TableField("name")
+    private String name;
+
+    @ApiModelProperty("优惠金额")
+    @TableField("discounted_price")
+    private BigDecimal discountedPrice;
+
+    @ApiModelProperty("优惠力度max10，如果没有折扣金额，就执行这个")
+    @TableField("discount")
+    private Integer discount;
+
+    @ApiModelProperty("过期时间，过了过期时间就不能用了")
+    @TableField("expired_time")
+    private LocalDateTime expiredTime;
+
     @ApiModelProperty("逻辑删除字段")
     @TableField("deleted")
     @TableLogic
     private Integer deleted;
-
-    @ApiModelProperty("投入月票的用户id")
-    @TableField("user_id")
-    private Integer userId;
-
-    @ApiModelProperty("被投入月票的书籍信息id")
-    @TableField("book_id")
-    private Integer bookId;
 }

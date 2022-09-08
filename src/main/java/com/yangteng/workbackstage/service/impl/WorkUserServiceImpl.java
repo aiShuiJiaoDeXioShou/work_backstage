@@ -3,7 +3,7 @@ package com.yangteng.workbackstage.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yangteng.workbackstage.entity.WorkUser;
+import com.yangteng.workbackstage.entity.us.WorkUser;
 import com.yangteng.workbackstage.mapper.WorkUserMapper;
 import com.yangteng.workbackstage.service.IWorkUserService;
 import org.springframework.stereotype.Service;

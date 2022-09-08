@@ -4,6 +4,7 @@ import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotRoleException;
 
 import com.yangteng.workbackstage.comm.R;
+import com.yangteng.workbackstage.exception.NoFontAuthorityException;
 import com.yangteng.workbackstage.myenum.E;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,6 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NotLoginException.class)
-    @ResponseStatus(HttpStatus.NOT_EXTENDED)
     public R exHandler(NotLoginException exception) {
         // 这样处理数据库异常可还行
         log.error(exception.getMessage());
@@ -49,5 +49,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotRoleException.class)
     public R exHandler(NotRoleException exception) {
         return R.fail("亲,您没有这个权限哦！");
+    }
+
+    @ExceptionHandler(NoFontAuthorityException.class)
+    public R exHandler(NoFontAuthorityException exception) {
+        return R.fail(exception.getMessage());
     }
 }

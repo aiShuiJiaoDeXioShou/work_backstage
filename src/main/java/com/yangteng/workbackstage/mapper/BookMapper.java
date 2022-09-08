@@ -1,6 +1,6 @@
 package com.yangteng.workbackstage.mapper;
 
-import com.yangteng.workbackstage.entity.UserConsume;
+import com.yangteng.workbackstage.entity.book.Book;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author 林河
  * @since 2022-08-09
  */
-public interface UserConsumeMapper extends BaseMapper<UserConsume> {
+public interface BookMapper extends BaseMapper<Book> {
 
 }
