@@ -1,5 +1,7 @@
 package com.yangteng.workbackstage.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -37,7 +39,10 @@ public class BookManagementController {
     @Autowired
     private IBookCollectService bookCollectService;
 
-    // 查询一本书籍
+    /**
+     * 查询一本书籍
+     * 
+     */
     @GetMapping("/{id}")
     public R info(@PathVariable Integer id) {
 
@@ -59,11 +64,12 @@ public class BookManagementController {
     }
 
     /**
-     * 添加一本图书
+     * 添加一本图书,这个得登录才能添加
      *
      * @param book
      */
     @PostMapping
+    @SaCheckLogin
     public R add(@RequestBody WorkBook book) {
         WorkBook one = bookService.getOne(Wrappers.<WorkBook>lambdaQuery().eq(WorkBook::getName, book.getName()));
         if (one != null) {
@@ -79,6 +85,7 @@ public class BookManagementController {
      * @param id
      */
     @DeleteMapping("/{id}")
+    @SaCheckRole("admin")
     public R delete(@PathVariable Integer id) {
         boolean remove = bookService.removeById(id);
         return remove ? R.ok() : R.fail();
@@ -102,7 +109,7 @@ public class BookManagementController {
      * @return R<List<WorkBook>> 返回查询信息
      */
     @GetMapping("/category/{type}")
-    public R<List<WorkBook>> category(@PathVariable String type) {
+    public R category(@PathVariable String type) {
         List<WorkBook> list = bookService.list(new QueryWrapper<WorkBook>().eq("book_category", type));
         return R.ok(list);
     }
@@ -115,7 +122,7 @@ public class BookManagementController {
      * @return R<Page<WorkBook>> 返回查询信息
      */
     @GetMapping("/click/{page}/{limit}")
-    public R<Page<WorkBook>> click(@PathVariable Integer page, @PathVariable Integer limit) {
+    public R click(@PathVariable Integer page, @PathVariable Integer limit) {
         Page<WorkBook> pageObj = new Page<WorkBook>(page, limit);
         LambdaQueryWrapper<WorkBook> lmq = Wrappers.lambdaQuery();
         // 按照点击量查询图书,如果点击量相等,则按照时间降序
@@ -166,8 +173,8 @@ public class BookManagementController {
      * @return R<Page<WorkBook>> 返回查询信息
      */
     @GetMapping("/ticket/{type}/{page}/{limit}")
-    public R<Page<WorkBook>> toTicket(@PathVariable Integer type, @PathVariable Integer page,
-                                      @PathVariable(value = "10") Integer limit) {
+    public R toTicket(@PathVariable Integer type, @PathVariable Integer page,
+            @PathVariable(value = "10") Integer limit) {
 
         return null;
     }
@@ -178,6 +185,7 @@ public class BookManagementController {
      * @param bookId 书籍id
      */
     @PostMapping("/collect/{bookId}")
+    @SaCheckRole("admin")
     public R addCollect(@PathVariable Integer bookId) {
         BookCollect bookCollect = new BookCollect();
         bookCollect.setBookId(bookId);
@@ -194,6 +202,7 @@ public class BookManagementController {
      * @param bookId 书籍id
      */
     @DeleteMapping("/collect/{bookId}")
+    @SaCheckRole("admin")
     public R deleted(@PathVariable Integer bookId) {
         if (!StpUtil.isLogin()) {
             return new R("你还未登入", E.NOT_LOGIN);

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author 林河
@@ -15,39 +16,40 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class R<T> implements Serializable {
+public class R implements Serializable {
     public static final String SUCCESS = "success";
     public static final String ERROR = "error";
+    private static final DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private String msg;
     private Integer code;
     private Object data;
-    private LocalDateTime time;
+    private String time;
 
     public R(String msg, E e) {
         this.msg = msg;
         this.code = e.getCode();
-        this.time = LocalDateTime.now();
+        this.time = LocalDateTime.now().format(format);
     }
 
     public R(E e) {
         this.msg = "失败！";
         this.code = e.getCode();
-        this.time = LocalDateTime.now();
+        this.time = LocalDateTime.now().format(format);
     }
 
     public R(String msg, E e, Object data, LocalDateTime time) {
         this.msg = msg;
         this.code = e.getCode();
         this.data = data;
-        this.time = time;
+        this.time = time.format(format);
     }
 
     public void setCode(E e) {
         this.code = e.getCode();
     }
 
-    public static <T> R<T> ok(T data) {
-        return new R<>(SUCCESS, E.SUCCESS_CODE, data, LocalDateTime.now());
+    public static R ok(Object data) {
+        return new R(SUCCESS, E.SUCCESS_CODE, data, LocalDateTime.now());
     }
 
     public static R ok(Object... data) {
@@ -58,11 +60,11 @@ public class R<T> implements Serializable {
         return new R(SUCCESS, E.SUCCESS_CODE, null, LocalDateTime.now());
     }
 
-    public static R<String> fail(String msg) {
-        return new R<String>(msg, E.ERROR_CODE, null, LocalDateTime.now());
+    public static R fail(String msg) {
+        return new R(msg, E.ERROR_CODE, null, LocalDateTime.now());
     }
 
-    public static R<String> fail() {
-        return new R<String>(ERROR, E.ERROR_CODE, null, LocalDateTime.now());
+    public static R fail() {
+        return new R(ERROR, E.ERROR_CODE, null, LocalDateTime.now());
     }
 }

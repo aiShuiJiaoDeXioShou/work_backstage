@@ -7,6 +7,9 @@ import com.yangteng.workbackstage.entity.ua.Role;
 import com.yangteng.workbackstage.entity.ua.RoleForAuthority;
 import com.yangteng.workbackstage.entity.ua.UserForRole;
 import com.yangteng.workbackstage.service.*;
+
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +22,9 @@ import java.time.temporal.ChronoUnit;
  */
 @Slf4j
 @RequestMapping("/au_role")
+@SaCheckRole("admin")
+@RestController
+@SaCheckLogin
 public class UserAuthorityManagementController {
     @Autowired
     private IAuthorityService authorityService;
@@ -76,7 +82,9 @@ public class UserAuthorityManagementController {
      */
     @PostMapping("/role_for_authority")
     public R addRoleForAuthority(Integer roleId, Integer authorityId) {
-        return roleForAuthorityService.save(new RoleForAuthority().setAuthorityId(authorityId).setRoleId(roleId)) ? R.ok() : R.fail();
+        return roleForAuthorityService.save(new RoleForAuthority().setAuthorityId(authorityId).setRoleId(roleId))
+                ? R.ok()
+                : R.fail();
     }
 
     /**
@@ -91,8 +99,7 @@ public class UserAuthorityManagementController {
         return userForRoleService.remove(
                 Wrappers.lambdaQuery(new UserForRole())
                         .eq(UserForRole::getUserId, userId)
-                        .eq(UserForRole::getRoleId, roleId)
-        ) ? R.ok() : R.fail();
+                        .eq(UserForRole::getRoleId, roleId)) ? R.ok() : R.fail();
     }
 
     /**
@@ -107,8 +114,7 @@ public class UserAuthorityManagementController {
         return roleForAuthorityService.remove(
                 Wrappers.lambdaQuery(new RoleForAuthority())
                         .eq(RoleForAuthority::getRoleId, roleId)
-                        .eq(RoleForAuthority::getAuthorityId, authorityId)
-        ) ? R.ok() : R.fail();
+                        .eq(RoleForAuthority::getAuthorityId, authorityId)) ? R.ok() : R.fail();
     }
 
     /**
@@ -163,13 +169,14 @@ public class UserAuthorityManagementController {
      * @param expireTime
      */
     @PutMapping("/user_for_role/{userId}/{roleId}/{expireTime}")
-    public R addUserForRoleExpireTime(@PathVariable Integer userId, @PathVariable Integer roleId, @PathVariable Long expireTime) {
+    public R addUserForRoleExpireTime(@PathVariable Integer userId, @PathVariable Integer roleId,
+            @PathVariable Long expireTime) {
         final UserForRole userForRole = userForRoleService.getOne(
                 Wrappers.lambdaUpdate(new UserForRole())
                         .eq(UserForRole::getUserId, userId)
-                        .eq(UserForRole::getRoleId, roleId)
-        );
-        if (userForRole == null) return R.fail();
+                        .eq(UserForRole::getRoleId, roleId));
+        if (userForRole == null)
+            return R.fail();
         final LocalDateTime newExpireTime = userForRole.getExpiration().plus(expireTime, ChronoUnit.SECONDS);
         return userForRoleService.saveOrUpdate(userForRole.setExpiration(newExpireTime)) ? R.ok() : R.fail();
     }
@@ -186,9 +193,9 @@ public class UserAuthorityManagementController {
         final UserForRole userForRole = userForRoleService.getOne(
                 Wrappers.lambdaQuery(new UserForRole())
                         .eq(UserForRole::getUserId, userId)
-                        .eq(UserForRole::getRoleId, roleId)
-        );
-        if (userForRole == null) return R.fail();
+                        .eq(UserForRole::getRoleId, roleId));
+        if (userForRole == null)
+            return R.fail();
         return userForRole.getExpiration().isAfter(LocalDateTime.now()) ? R.ok() : R.fail();
     }
 

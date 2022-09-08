@@ -1,6 +1,8 @@
 package com.yangteng.workbackstage.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
+import com.yangteng.workbackstage.annotation.AuthorHimself;
 import com.yangteng.workbackstage.comm.R;
 import com.yangteng.workbackstage.entity.WorkUser;
 import com.yangteng.workbackstage.service.IWorkUserService;
@@ -20,7 +22,7 @@ public class UserManagementController {
 
     // 注册账号
     @PostMapping("/register")
-    public R<String> register(@RequestBody WorkUser workUser) {
+    public R register(@RequestBody WorkUser workUser) {
         log.info("注册账号：{}", workUser);
         userService.save(workUser);
         return R.ok("注册成功！");
@@ -41,16 +43,15 @@ public class UserManagementController {
     }
 
     @GetMapping("/info/{id}")
+    @SaCheckLogin
     public R info(@PathVariable Integer id) {
-        if (!StpUtil.isLogin()) {
-            return R.fail("未登录！");
-        }
         final WorkUser workUser = userService.getById(id);
         return R.ok(workUser);
     }
 
     @RequestMapping("logout")
-    public R<String> logout() {
+    @SaCheckLogin
+    public R logout() {
         StpUtil.logout();
         return R.ok();
     }

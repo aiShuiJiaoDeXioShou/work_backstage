@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Component
 @Slf4j
-public class StpInterfaceImpl implements StpInterface {
+public class UserPermissionCertificationImpl implements StpInterface {
     @Autowired
     private UserAuthorityManagementService userAuthorityManagementService;
 

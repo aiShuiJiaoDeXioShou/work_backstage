@@ -1,5 +1,6 @@
 package com.yangteng.workbackstage.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -35,8 +36,7 @@ public class ChapterReadOrWriterManagementController {
         final List<BookChapter> books = bookChapterService.list(
                 Wrappers.lambdaQuery(new BookChapter())
                         .eq(BookChapter::getBookId, bookId)
-                        .orderByDesc(BookChapter::getCreateTime)
-        );
+                        .orderByDesc(BookChapter::getCreateTime));
         return books != null ? R.ok(books) : R.fail();
     }
 
@@ -53,7 +53,7 @@ public class ChapterReadOrWriterManagementController {
                 .select(BookChapter::getChapterTitle, BookChapter::getId)
                 .eq(BookChapter::getBookId, bookId)
                 .orderByDesc(BookChapter::getCreateTime);
-        final List chapterNames = bookChapterService.listObjs(bookChapterWrapper);
+        final List<Object> chapterNames = bookChapterService.listObjs(bookChapterWrapper);
         return Objects.isNull(chapterNames) ? R.fail() : R.ok(chapterNames);
     }
 
@@ -70,7 +70,8 @@ public class ChapterReadOrWriterManagementController {
         final LambdaQueryWrapper<BookChapter> bookChapterWrapper = Wrappers.lambdaQuery(new BookChapter())
                 .eq(BookChapter::getBookId, bookId)
                 .orderByDesc(BookChapter::getCreateTime);
-        final Page<BookChapter> chapterPage = bookChapterService.page(new Page<BookChapter>(page, size), bookChapterWrapper);
+        final Page<BookChapter> chapterPage = bookChapterService.page(new Page<BookChapter>(page, size),
+                bookChapterWrapper);
         return Objects.isNull(chapterPage) ? R.fail() : R.ok(chapterPage);
     }
 
@@ -93,6 +94,7 @@ public class ChapterReadOrWriterManagementController {
      * @return R.ok or R.fail
      */
     @PutMapping
+    @SaCheckLogin
     public R updateChapter(@RequestBody BookChapter chapter) {
         final boolean update = bookChapterService.updateById(chapter);
         return update ? R.ok() : R.fail();
@@ -104,11 +106,11 @@ public class ChapterReadOrWriterManagementController {
      * @param chapterId
      */
     @DeleteMapping("/{chapterId}")
+    @SaCheckLogin
     public R deleteChapter(@PathVariable Integer chapterId) {
         final boolean delete = bookChapterService.remove(
                 Wrappers.lambdaQuery(new BookChapter())
-                        .eq(BookChapter::getId, chapterId)
-        );
+                        .eq(BookChapter::getId, chapterId));
         return delete ? R.ok() : R.fail();
     }
 
@@ -119,12 +121,12 @@ public class ChapterReadOrWriterManagementController {
      * @return R.ok(List < String >) or R.fail
      */
     @GetMapping("/comment/{chapterId}")
+    @SaCheckLogin
     public R getComment(@PathVariable Integer chapterId) {
         final List<ChapterComment> chapterComments = chapterCommentService.list(
                 Wrappers.lambdaQuery(new ChapterComment())
                         .eq(ChapterComment::getChapterId, chapterId)
-                        .orderByDesc(ChapterComment::getCreateTime
-                        ));
+                        .orderByDesc(ChapterComment::getCreateTime));
         return Objects.isNull(chapterComments) ? R.fail() : R.ok(chapterComments);
     }
 
@@ -136,13 +138,13 @@ public class ChapterReadOrWriterManagementController {
      * @return R.ok(List < String >) or R.fail
      */
     @GetMapping("/comment/{chapterId}/{number}")
+    @SaCheckLogin
     public R getComment(@PathVariable Integer chapterId, @PathVariable Integer number) {
         final List<ChapterComment> chapterComments = chapterCommentService.list(
                 Wrappers.lambdaQuery(new ChapterComment())
                         .eq(ChapterComment::getChapterId, chapterId)
                         .eq(ChapterComment::getChapterParagraphNum, number)
-                        .orderByDesc(ChapterComment::getCreateTime)
-        );
+                        .orderByDesc(ChapterComment::getCreateTime));
         return Objects.isNull(chapterComments) ? R.fail() : R.ok(chapterComments);
     }
 
@@ -153,12 +155,25 @@ public class ChapterReadOrWriterManagementController {
      * @return R.ok or R.fail
      */
     @DeleteMapping("/comment/{commentId}")
+    @SaCheckLogin
     public R deleteComment(@PathVariable Integer commentId) {
         final boolean delete = chapterCommentService.remove(
                 Wrappers.lambdaQuery(new ChapterComment())
-                        .eq(ChapterComment::getId, commentId)
-        );
+                        .eq(ChapterComment::getId, commentId));
         return delete ? R.ok() : R.fail();
+    }
+
+    /**
+     * 新增一本书，只有这本书的作家才能新增这个章节
+     * 
+     * @param chapter
+     * @return R.ok or R.fail
+     */
+    @SaCheckLogin
+    @PostMapping
+    public R addOneChapter(BookChapter chapter) {
+        boolean save = bookChapterService.save(chapter);
+        return save ? R.ok() : R.fail();
     }
 
 }

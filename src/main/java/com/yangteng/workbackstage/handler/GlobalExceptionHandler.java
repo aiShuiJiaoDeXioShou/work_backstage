@@ -1,6 +1,8 @@
-package com.yangteng.workbackstage.exception;
+package com.yangteng.workbackstage.handler;
 
 import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotRoleException;
+
 import com.yangteng.workbackstage.comm.R;
 import com.yangteng.workbackstage.myenum.E;
 import lombok.extern.slf4j.Slf4j;
@@ -16,22 +18,22 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(value = NoHandlerFoundException.class)
-    public R<String> handler(NoHandlerFoundException exception) {
+    public R handler(NoHandlerFoundException exception) {
         log.error("亲，未找到该项服务哦！ 404");
-        return new R<>("亲，未找到该项服务哦！ 404", E.NOT_FOUND);
+        return new R("亲，未找到该项服务哦！ 404", E.NOT_FOUND);
     }
 
     @ExceptionHandler(NotLoginException.class)
-    public R<String> exHandler(NotLoginException exception) {
+    @ResponseStatus(HttpStatus.NOT_EXTENDED)
+    public R exHandler(NotLoginException exception) {
         // 这样处理数据库异常可还行
         log.error(exception.getMessage());
-        return new R<String>(exception.getMessage(), E.NOT_LOGIN);
+        return new R(exception.getMessage(), E.NOT_LOGIN);
     }
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public R<String> exHandler(SQLIntegrityConstraintViolationException exception) {
+    public R exHandler(SQLIntegrityConstraintViolationException exception) {
         // 这样处理数据库异常可还行
         final String message = exception.getMessage();
         StringBuffer res_msg = new StringBuffer();
@@ -42,5 +44,10 @@ public class GlobalExceptionHandler {
             log.error("{}已经存在", res_msg);
         }
         return R.fail(String.valueOf(res_msg.append("已经存在")));
+    }
+
+    @ExceptionHandler(NotRoleException.class)
+    public R exHandler(NotRoleException exception) {
+        return R.fail("亲,您没有这个权限哦！");
     }
 }
