@@ -19,7 +19,9 @@ public class UserManagementController {
     @Autowired
     private IWorkUserService userService;
 
-    // 注册账号
+    /**
+     * 注册账号
+     */
     @PostMapping("/register")
     public R register(@RequestBody WorkUser workUser) {
         log.info("注册账号：{}", workUser);
@@ -27,6 +29,11 @@ public class UserManagementController {
         return R.ok("注册成功！");
     }
 
+    /**
+     * 用户登录
+     * @param user
+     * @return
+     */
     @PostMapping("/login")
     public R login(@RequestBody WorkUser user) {
         log.info("user: {}", user);
@@ -41,6 +48,11 @@ public class UserManagementController {
         return R.fail("登录失败！");
     }
 
+    /**
+     * 获取指定用户详细信息
+     * @param id
+     * @return
+     */
     @GetMapping("/info/{id}")
     @SaCheckLogin
     public R info(@PathVariable Integer id) {
@@ -48,6 +60,10 @@ public class UserManagementController {
         return R.ok(workUser);
     }
 
+    /**
+     * 退出登录
+     * @return
+     */
     @RequestMapping("logout")
     @SaCheckLogin
     public R logout() {

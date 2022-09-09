@@ -36,6 +36,11 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
                     metaObject.setValue("autorId", StpUtil.getLoginId());
                 }
 
+                Object userId = metaObject.getValue("userId");
+                if (userId != null) {
+                    metaObject.setValue("userId", StpUtil.getLoginId());
+                }
+
             } catch (ReflectionException e) {
                 log.warn("没有createUser字段,或者没有updateUser字段,无法填充!!!");
             }

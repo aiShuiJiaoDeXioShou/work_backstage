@@ -38,4 +38,28 @@
         GROUP BY
             bag.coupon_id;
     </select>
+
+    <select id="selectCouponByIds" resultType="com.yangteng.workbackstage.entity.vo.CouponBagVo">
+        SELECT
+            bag.coupon_id AS coupon_id,
+            COUNT( bag.coupon_id ) AS coupon_number,
+            coupon.create_time,
+            coupon.`name` AS title,
+            coupon.discount,
+            coupon.discounted_price,
+            coupon.expired_time
+        FROM
+            us_coupon_user_bag AS bag,
+            us_coupon AS coupon
+        WHERE
+            bag.id IN
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        AND bag.coupon_id = coupon.id
+          AND coupon.expired_time >= coupon.create_time
+        GROUP BY
+        bag.coupon_id
+        ORDER BY coupon.discount DESC,coupon.discounted_price DESC;
+    </select>
 </mapper>

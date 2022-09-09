@@ -34,7 +34,11 @@ public class RechargeServiceImpl extends ServiceImpl<RechargeMapper, Recharge> i
 
         // 获取所有的充值方案
         List<RechargeSchemeVo> rechargeSchemeOne = pythonScriptLoad
-                .runPythonScript("RechargeSchemeOne.py", RechargeSchemeVo.class);
+                .runPythonScript(
+                        "RechargeSchemeOne.py",
+                        RechargeSchemeVo.class,
+                        " "+StpUtil.getLoginIdAsLong()
+                );
         // 指定的充值方案
         RechargeSchemeVo schemeVo = rechargeSchemeOne.get(rp_id);
 

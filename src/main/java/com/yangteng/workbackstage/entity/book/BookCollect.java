@@ -57,4 +57,8 @@ public class BookCollect implements Serializable {
     @ApiModelProperty("收藏的书籍信息id")
     @TableField("book_id")
     private Long bookId;
+
+    @ApiModelProperty("0为收藏1为足迹")
+    @TableField("type")
+    private Integer type;
 }

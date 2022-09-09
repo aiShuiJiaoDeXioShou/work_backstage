@@ -58,14 +58,14 @@ public class UserAuthorityManagementServiceImpl implements UserAuthorityManageme
      * @return 角色集合 List<Role>
      */
     public List<Role> getRoleList(Object loginId) {
-        final List<UserForRole> list = userForRoleService.list(
+        List<UserForRole> list = userForRoleService.list(
                 Wrappers.lambdaQuery(new UserForRole())
                         .eq(UserForRole::getUserId, loginId)
+                        .apply("update_time <= expiration")
         );
-        final List<Role> roleCollect = list.stream()
+        return list.stream()
                 .map(UserForRole::getRoleId)
                 .map(id -> roleService.getById(id))
                 .collect(Collectors.toList());
-        return roleCollect;
     }
 }

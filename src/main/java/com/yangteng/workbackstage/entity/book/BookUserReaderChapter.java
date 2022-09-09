@@ -1,10 +1,9 @@
-package com.yangteng.workbackstage.entity.us;
+package com.yangteng.workbackstage.entity.book;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -28,13 +27,13 @@ import lombok.experimental.Accessors;
 @Setter
 @ToString
 @Accessors(chain = true)
-@TableName("us_consume")
-@ApiModel(value = "Consume对象", description = "")
-public class Consume implements Serializable {
+@TableName("book_user_reader_chapter")
+@ApiModel(value = "BookUserReaderChapter对象", description = "")
+public class BookUserReaderChapter implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("id")
+    @ApiModelProperty("用户章节付费id")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
@@ -46,32 +45,23 @@ public class Consume implements Serializable {
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    @ApiModelProperty("用户id")
-    @TableField("user_id")
-    private Long userId;
-
-    @ApiModelProperty("信息id")
+    @ApiModelProperty("书籍id")
     @TableField("book_id")
     private Long bookId;
 
-    @ApiModelProperty("效费版本")
-    @TableField("version")
-    private Integer version;
+    @ApiModelProperty("创建者的用户id")
+    @TableField(value = "create_user", fill = FieldFill.INSERT)
+    private Long createUser;
 
-    @ApiModelProperty("消费金额")
+    @ApiModelProperty("章节id")
+    @TableField("chapter_id")
+    private Long chapterId;
+
+    @ApiModelProperty("本章消费的金额")
     @TableField("money")
     private BigDecimal money;
 
-    @ApiModelProperty("消费类型")
+    @ApiModelProperty("0为章节消费，1为书籍消费")
     @TableField("type")
-    private Integer type;
-
-    @ApiModelProperty("逻辑删除字段")
-    @TableField("deleted")
-    @TableLogic
-    private Integer deleted;
-
-    @ApiModelProperty("该消费的说明")
-    @TableField("illustrate")
-    private String illustrate;
+    private Byte type;
 }

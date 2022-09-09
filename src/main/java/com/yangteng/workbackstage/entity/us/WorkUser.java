@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import com.yangteng.workbackstage.myenum.level.WordtreeAuthorLevel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -21,7 +23,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 林河
- * @since 2022-09-08
+ * @since 2022-09-09
  */
 @Getter
 @Setter
@@ -64,4 +66,20 @@ public class WorkUser implements Serializable {
     @ApiModelProperty("账户余额")
     @TableField("account_balance")
     private BigDecimal accountBalance;
+
+    @ApiModelProperty("阅读等级")
+    @TableField("read_level")
+    private WordtreeAuthorLevel readLevel;
+
+    @ApiModelProperty("作者等级")
+    @TableField("author_level")
+    private WordtreeAuthorLevel authorLevel;
+
+    @ApiModelProperty("作者经验")
+    @TableField("author_ex")
+    private Long authorEx;
+
+    @ApiModelProperty("阅读经验")
+    @TableField("read_ex")
+    private Long readEx;
 }

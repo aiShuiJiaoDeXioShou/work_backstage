@@ -7,6 +7,7 @@ import com.yangteng.workbackstage.service.ICouponUserBagService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,6 +31,12 @@ public class CouponUserBagServiceImpl extends ServiceImpl<CouponUserBagMapper, C
     @Override
     public List<CouponBagVo> getBagNotExpiring(Long userId) {
         List<CouponBagVo> maps = getBaseMapper().selectAllNotExpiringByUserId(userId);
+        return maps;
+    }
+
+    @Override
+    public List<CouponBagVo> getBagByIds(ArrayList<Long> ids) {
+        List<CouponBagVo> maps = getBaseMapper().selectCouponByIds(ids);
         return maps;
     }
 }

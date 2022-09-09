@@ -75,7 +75,7 @@ public class PythonScriptLoad {
     /**
      * java 调用命令行运行python脚本，并且获取运行结果
      */
-    public <T> List<T> execute(String script,Class<T> type) {
+    public <T> List<T> execute(String script,Class<T> type,String... args) {
         List<T> t;
         String exec = RuntimeUtil.execForStr("python " + script);
         try {
@@ -89,8 +89,8 @@ public class PythonScriptLoad {
     /**
      * 运行python脚本服务
      */
-    public <T> List<T> runPythonScript(String scriptName, Class<T> type){
+    public <T> List<T> runPythonScript(String scriptName, Class<T> type,String... args){
         String s = getScript(scriptName);
-        return execute(s,type);
+        return execute(s,type,args);
     }
 }

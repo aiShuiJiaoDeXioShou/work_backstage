@@ -66,7 +66,11 @@ public class RechargeController {
     public R getRechargeProgram() {
         // 加载指定位置的python语言脚本来获取充值方案
         List<RechargeSchemeVo> rechargeSchemeOne = pythonScriptLoad
-                .runPythonScript("RechargeSchemeOne.py", RechargeSchemeVo.class);
+                .runPythonScript(
+                        "RechargeSchemeOne.py",
+                        RechargeSchemeVo.class,
+                        " "+StpUtil.getLoginIdAsLong()
+                );
         return R.ok(rechargeSchemeOne);
     }
 

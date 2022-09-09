@@ -5,6 +5,7 @@ import com.yangteng.workbackstage.entity.us.CouponUserBag;
 import com.yangteng.workbackstage.entity.vo.CouponBagVo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,4 +20,6 @@ public interface CouponUserBagMapper extends BaseMapper<CouponUserBag> {
     List<CouponBagVo> selectAllCouponByUserId(@Param("userId") Long userId);
 
     List<CouponBagVo> selectAllNotExpiringByUserId(Long userId);
+
+    List<CouponBagVo> selectCouponByIds(@Param("ids") ArrayList<Long> ids);
 }

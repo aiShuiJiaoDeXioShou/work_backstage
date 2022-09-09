@@ -13,4 +13,15 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IBookService extends IService<Book> {
 
+    /**
+     * 获取书籍付费方案,签约书籍
+     */
+
+
+    /**
+     * 书籍点击量++
+     */
+    boolean addBookClick(Long bookId);
+
+
 }
